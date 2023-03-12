@@ -1,0 +1,51 @@
+
+<?php if(!$submit){ ?>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Add setting</h1>
+    <form action="/setting/add?submit=true" method="post">
+        <div class="form-group">
+            <label for="title_optimization">Title optimization</label>
+            <select class="form-control" id="title_optimization" name="title_optimization">
+                <option selected disabled value="not_selected">Select any option</option>
+                <option value="with_tags">With tags</option>
+                <option value="without_tags">Without tags</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="default_price">Default price</label>
+            <input class="form-control" id="default_price" placeholder="Enter price" name="default_price" />
+        </div>
+        <div class="form-group">
+            <label for="default_stock">Default stock</label>
+            <input type="text" class="form-control" id="default_stock" placeholder="Enter stock" name="default_stock">
+        </div>
+        <div class="form-group">
+            <label for="price">Default zipcode</label>
+            <input type="text" class="form-control" id="default_zipcode" placeholder="Enter zipcode" name="default_zipcode">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+<div class="container">
+<?php }
+else if($success){ ?>
+    <div class="alert alert-success" role="alert">
+    <?php echo $message; ?> 
+    </div>
+    <a href="/product/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add more</a>
+
+<?php
+} else {
+?>
+    <div class="alert alert-danger" role="alert">
+    <?php echo $message; ?> 
+    </div>
+    <a  class="btn btn-primary btn-lg">Try again</a>
+
+<?php 
+} 
+?>
+</div>

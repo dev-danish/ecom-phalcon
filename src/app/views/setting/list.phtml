@@ -1,0 +1,39 @@
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+    <h2>List settings</h2>
+<?php
+if ($settings->count() > 0 || $settings != null ) {
+    ?>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>#Id</th>
+            <th>Title optimization</th>
+            <th>Default price</th>
+            <th>Default stock</th>
+            <th>Default zipcode</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td colspan="6">Settings count: <?php echo $settings->count(); ?></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <?php foreach ($settings as $setting) { ?>
+            <tr>
+                <td><?php echo $setting->id; ?></td>
+                <td><?php echo $setting->title_optimization; ?></td>
+                <td><?php echo $setting->default_price; ?></td>
+                <td><?php echo $setting->default_stock; ?></td>
+                <td><?php echo $setting->default_zipcode; ?></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+}
+?>
+</div>
+</div>

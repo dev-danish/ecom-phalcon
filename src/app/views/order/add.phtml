@@ -1,0 +1,64 @@
+
+<?php if(!$submit){ ?>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Add order</h1>
+    <form action="/order/add?submit=true" method="post">
+        <div class="form-group">
+            <label for="title">Customer name</label>
+            <input type="text" class="form-control" id="title" placeholder="Enter name" name="customer_name">
+        </div>
+        <div class="form-group">
+            <label for="customer_address">Description</label>
+            <textarea class="form-control" id="description" placeholder="Enter address" name="customer_address"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="tags">Zipcode</label>
+            <input type="text" class="form-control" id="tags" placeholder="Enter zipcode" name="zipcode">
+        </div>
+        <div class="form-group">
+            <label for="product">Product</label>
+            <?php if($products->count() > 0){ ?>
+                <select class="form-control" id="product" name="product">
+                    <option disabled selected>Select product</option>
+                    <?php foreach ($products as $product) {?>
+                    <option value="<?php echo $product->id; ?>"><?php echo $product->title; ?></option>
+                    <?php } ?>
+                </select>
+            <?php 
+                }else{
+            ?>
+                <p>*Products are not available.</p>
+            <?php 
+                } 
+            ?>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Stock</label>
+            <input type="text" class="form-control" id="quantity" placeholder="Enter stock" name="quantity">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+<div class="container">
+<?php }
+else if($success){ ?>
+    <div class="alert alert-success" role="alert">
+    <?php echo $message; ?> 
+    </div>
+    <a href="/product/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add more</a>
+
+<?php
+} else {
+?>
+    <div class="alert alert-danger" role="alert">
+    <?php echo $message; ?> 
+    </div>
+    <a  class="btn btn-primary btn-lg">Try again</a>
+
+<?php 
+} 
+?>
+</div>
