@@ -12,6 +12,7 @@ use Phalcon\Http\Response\Cookies;
 use Phalcon\Events\Event;
 use Phalcon\Events\Manager as EventManager;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
+use Phalcon\Mvc\Router;
 
 // $config = new Config([]);
 
@@ -119,12 +120,8 @@ $container->setShared(
         return $modelsManager;
     }
 );
-// $eventsManager = new EventsManager();
 
-// $eventsManager->attach(
-//     'model:beforeCreate',
-//     new \App\Listeners\EventListener()
-// );
+
 $container->set(
     'db',
     function () {
@@ -140,7 +137,41 @@ $container->set(
         }
 );
 
+$container->set(
+    'aclManager',
+    function(){
+        
+
+    }
+);
+
 $application = new Application($container);
+$eventsManager = new EventManager();
+$application->setEventsManager($eventsManager);
+
+$eventsManager->attach(
+    'application:beforeHandleRequest',
+    function(Event $event, $application){
+        $router = new Router();
+        $response = new \Phalcon\Http\Response();
+        $aclManager = new \App\Components\AclManager();
+        $router->handle($_SERVER['REQUEST_URI']);
+        $controller = $router->getControllerName();
+        $action = $router->getActionName();
+        $role = $_GET['role'];
+        $acl = $aclManager->manage();
+        echo $acl->isAllowed($role, $controller, $action);
+        if($acl->isAllowed($role, $controller, $action)){
+            $response->setContent("<h2>Not Access forbidden</h2>");
+            $response->send();
+        }
+        else{
+            $response->setStatusCode(403, 'Not Found');
+            $response->setContent("<h2>Access forbidden</h2>");
+            $response->send();die;
+        }
+    }   
+);
 
 try {
     // Handle the request
