@@ -1,0 +1,70 @@
+<?php if(!$submit){ ?>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Add role</h1>
+    <form action="/acl/role?submit=true" method="post">
+        <div class="form-group">
+            <label for="role">Role</label>
+            <input type="text" class="form-control" id="role" placeholder="Enter role like admin, guest, manager etc." name="role">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
+
+<div class="container">
+<?php }
+else if($success){ ?>
+    <div class="alert alert-success" role="alert">
+    <?php echo $message; ?> 
+    </div>
+    <a href="/acl/role" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Go back</a>
+
+<?php
+} else {
+?>
+    <div class="alert alert-danger" role="alert">
+    <?php echo $message; ?> 
+    </div>
+    <a href="/acl/role" class="btn btn-primary btn-lg">Go again</a>
+<?php 
+} 
+?>
+</div>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+    <h2>List roles</h2>
+<?php
+if ($roles->count() > 0 || $roles != null ) {
+    ?>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+            <th>#Id</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td colspan="2">Role count: <?php echo $roles->count(); ?></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <?php foreach ($roles as $role) { ?>
+            <tr>
+                <td><?php echo $role->id; ?></td>
+                <td><?php echo $role->role; ?></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+}
+else
+{
+?>
+
+<?php } ?>
+</div>
+</div>
+

@@ -159,13 +159,18 @@ $eventsManager->attach(
         $controller = $router->getControllerName();
         $action = $router->getActionName();
         $role = $_GET['role'];
-        $acl = $aclManager->manage();
-        echo $acl->isAllowed($role, $controller, $action);
-        if($acl->isAllowed($role, $controller, $action)){
+        $roles = Roles::find();
+        $components = Aclmanage::find();
+        $resources = Resources::find();
+
+        $acl = $aclManager->manage($roles, $resources, $components);
+
+        // echo $acl->isAllowed($role, $controller, $action);
+        if($_GET['role'] && $acl->isAllowed($role, $controller, $action)){
             $response->setContent("<h2>Not Access forbidden</h2>");
             $response->send();
         }
-        else{
+        else if($_GET['role']){
             $response->setStatusCode(403, 'Not Found');
             $response->setContent("<h2>Access forbidden</h2>");
             $response->send();die;

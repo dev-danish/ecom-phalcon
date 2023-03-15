@@ -10,5 +10,5 @@ return [
         'username' => 'root',
         'password' => 'secret',
         'dbname'   => 'ecom',  
-    ],
+    ]
 ];
